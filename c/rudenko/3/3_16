@@ -1,0 +1,53 @@
+- Верно ли утверждение: "действие оператора break; в приведенных ниже примерах
+эквивалентно действию оператора go to next; " ?
+
+a) while (E) {
+	S;
+	... break;
+	... S;
+	next: ;
+	}
+
+- NO
+
+b) while ( E ) { 
+	S; 
+	... break;
+	... S; 
+	} 
+	next: ; ...
+
+- YES
+
+c) do { S; ... break; ... S; } while ( E ); next: ; ...
+
+- YES
+
+d) for ( E1; E2; E3) { S; ... break; ... S; next: ; }
+
+- NO
+
+e) while ( E) { S; ... for ( E1; E2; E3) { S; ... break; ... S; } next: ; ... S; }
+
+- YES
+
+f) while ( E ) { S; ... for ( E1; E2; E3) { S; ... break; ... S; } ... S; next: ; }
+
+- NO
+
+g) while ( E) { S; ... for ( E1; E2; E3) { S; ... break; ... S; } ... S; } next: ;
+
+- NO
+
+h) switch ( E ) { case C1: S;
+case C2: S; break;
+case C3: S; }
+next:; ...
+
+- YES
+
+i) switch ( E ) { case C1: S;
+case C2: S; break; S;
+case C3: next: S; }
+
+- NO

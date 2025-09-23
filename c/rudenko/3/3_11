@@ -1,0 +1,27 @@
+- Улучшить стиль (структуру) следующих фрагментов программы на Си:
+a) while (E1) {
+       if (E2) continue;
+	   S; 
+   }
+
+while (E1) {
+	if (!E2) S;
+}
+
+
+b)
+do {
+	if (E1) continue;
+	else S1;
+	S2;
+}
+while (E2);
+
+
+do {
+	if (!E1) {
+		S1;
+		S2;
+	}
+}
+while (E2);

@@ -1,0 +1,82 @@
+- Верно ли утверждение: "действие оператора continue в приведённых ниже
+примерах эквивалентно действию оператора go to next;" ?
+a) while (E) {
+	S;
+	... continue;
+	... S;
+	next: ;
+	}
+
+- YES
+
+b)
+do {
+	S;
+	... continue;
+	... S;
+} while (E);
+next: ; ...
+
+- NO
+
+c) for (E1; E2; E3) {
+	S;
+	... continue;
+	... S;
+	next: ;
+}
+
+- YES
+
+d) while (E) {
+	S;
+	... for (E1; E2; E3) {
+		S;
+		... continue;
+		... S;
+		}
+		... S;
+		next: ;
+	}
+
+- NO
+
+e) while (E) {
+	S;
+	... for (E1; E2; E3) {
+		S;
+		... continue;
+		... S;
+		next: ;
+		}
+		... S;
+		}
+
+- YES
+
+f)
+switch (E) {
+	case C1: S;
+	case C2: S; continue;
+	case C3: S;
+	}
+
+next:; ...
+
+- NO
+
+g) switch (E) {
+	case C1: S;
+	case C2: S; continue;
+	case C3: next: S;
+	}
+
+- NO
+
+h) next: switch (E) {
+	case C1: S;
+	case C2: S; continue;
+	case C3: S;
+	}
+
+- NO

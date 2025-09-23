@@ -1,0 +1,30 @@
+Что напечатает следующая программа?
+# include <stdio.h>
+
+main() {
+	int x, y, z;
+	x = y = 0;
+	while ( y < 10 ) ++y; 
+	x += y;
+	printf ("x = %d y = %d\n", x, y);  /* x = 10 y = 10 */
+
+	x = y = 0;
+	while ( y < 10 ) x += ++ y;
+	printf (" x= %d y = %d\n", x, y); /* x = 55 y = 10 */
+
+	y = 1;
+	while ( y < 10 ) { 
+		x = y++; 
+		z = ++y;
+	}
+	printf ("x = %d y = %d z = %d\n", x, y, z); /* x = 9 y = 11 z = 11 */
+
+	for ( y =1; y < 10; y++ ) x = y;
+	printf (" x= %d y = %d\n", x, y); /* x = 9 y = 10 */
+
+	for ( y = 1; ( x = y ) < 10; y++ );
+	printf ("x = %d y = %d\n", x, y); /* x = 10 y = 10 */
+	
+	for ( x = 0, y = 1000; y > 1; x++, y /= 10 )
+	printf ("x = %d y = %d\n", x, y); /* x = 3 y = 0 */
+}
