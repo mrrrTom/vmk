@@ -1,0 +1,13 @@
+-
+We have:
+char c; short s; int i; unsigned u; sidned char sc; float f; double d; long lng;
+unsigned short us; long double ld;
+
+Resolve expressions types:
+
+c - s / i  --> int
+u * 3 - 3.0 * u - i --> double
+u - us * i --> int
+(sc + d) * ld --> long double
+(5 * lng - 'a') * (s + u / 2) -->  long
+(f + 3) / (2.5f - s * 3.14) --> double

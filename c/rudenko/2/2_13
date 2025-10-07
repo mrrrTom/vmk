@@ -1,0 +1,15 @@
+- Is this allowed in C. Describe semantics or why it is not permitted:
+
+a)
+int i;
+i = (1 || 2) % (1 | 2);
+printf ("i = %d\n", i);
+
+allowed - 1 % 3 
+
+b)
+int a, b, m, n, z;
+m = n = 5;
+z = a = b = 0;
+z--, (a = b) = z + (m != n);
+printf(
