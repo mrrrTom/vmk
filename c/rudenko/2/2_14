@@ -1,0 +1,23 @@
+- what will be the output of this code?
+
+double d; float f; long lng; int i; short s;
+s = i = lng = f = d = 100/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); --> 33 ...
+d = f = lng = i = s =100/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); -->  33
+s = i = lng = f = d = 1000000/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); --> 333333
+d = f = lng = i = s =1000000/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); --> 333333
+
+
+lng = s = f = i = d =100/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); 33
+f = s = d = lng = i = (double)100/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); 33 
+s = i = lng = f = d = 100/(double)3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); 33 33 33 33.3333 33.333333
+f = s = d = lng = i = (double)100/3;
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); 33
+i = s = lng = d = f = (double)(100/3);
+printf("s = %hd i = %d lng = %ld f = %f d = %f\n", s, i, lng, f, d); 33
