@@ -2,11 +2,11 @@
 int count = 0;
 bool check() {
 	printf("Check %d\n", count++);
-	return false;
+	return true;
 }
 
 int main() {
-	if (check() && check()) {
+	if (check() || check()) {
 		printf("Inside if");
 	}
 
