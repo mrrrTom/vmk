@@ -9,8 +9,8 @@ _Static_assert ((sizeof (char) == 1),
 void add_value(unsigned int* storage_ptr, char value) {
 	unsigned int storage = *storage_ptr;
 	
-	storage = storage | value;
 	storage = storage << 8;
+	storage = storage | value;
 
 	*storage_ptr = storage;
 }
@@ -21,6 +21,7 @@ int main() {
 	for (int i = 0; i < sizeof(values) && (values[i] != '\0'); i++) {
 		add_value(&storage, values[i]);
 	}
+
 	
 	printf("%d", storage);
 
