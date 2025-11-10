@@ -73,3 +73,69 @@ char* strrchr(const char* cs, char c) {
 
 	return result;
 }
+
+char* strstr(const char* cs, const char* ct) {
+	const char* c_l_p = cs;
+	while (c_l_p && (*c_l_p != '\0')) {
+		const char* c_r_p = c_l_p;
+		bool has_match = true;
+		const char* t_p = ct;
+		while (has_match && t_p && (*t_p != '\0')) {
+			if (*c_r_p != *t_p) has_match = false;
+			c_r_p++;
+			t_p++;
+		}
+
+		if (has_match) return c_l_p;
+		c_l_p++;
+	}
+
+	return NULL;
+}
+
+bool is_in(char s, const char* t) {
+	while (t && (*t != '\0')) {
+		if (s == *t) return true;
+		t++;
+	}
+
+	return false;
+}
+
+char* strtok(char* s, const char* ct) {
+	if (!s) s++;
+	char* s_p = s;
+	while (s_p && (*s_p != '\0')) {
+		if (is_in(*s_p, ct)) {
+			*s_p = '\0';
+			return s;
+		}
+
+		s_p++;
+	}
+
+	return s;
+}
+
+void* memcpy(void* s, const void* ct, size_t n) {
+	char* s_p = s;
+	char* t_p = ct;
+	while (ct && (*s_p != '\0') && (*t_p != '\0') && n) {
+		*s_p = *t_p;
+		n--;
+		t_p++;
+	}
+
+	return s;
+}
+
+void* memset(void* s, char c, size_t n) {
+	char* s_p = s;
+	while (s_p && (*s_p != '\0') && n) {
+		*s_p = c;
+		n--;
+		s_p++;
+	}
+
+	return s;
+}

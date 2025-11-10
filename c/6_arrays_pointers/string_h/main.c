@@ -1,5 +1,23 @@
 #include <string_dv.h>
 #include <stdio.h>
+void strcpy_wrapper() {
+	printf("copies src string to the dest string\n");
+	printf("returns pointer to the dest string\n");
+	printf("insert dest string: ");
+	char dest[100];
+	if (scanf("%s", dest) != 1) {
+		printf("wrong input!\n");
+	}
+
+	printf("insert source string: ");
+	char source[100];
+	if (scanf("%s", source) !=1) {
+		printf("wrong input!\n");
+	}
+
+	char* result = strcpy(dest, source);
+	printf("dest string after copy: \"%s\"\n", dest);
+}
 
 void strlen_wrapper() {
 	printf("returns the length of a given string except terminal zero char\n");
@@ -19,7 +37,8 @@ struct func {
 	void (*fp)();
 };
 
-struct func funcs[] = { { "strlen", &strlen_wrapper } };
+struct func funcs[] = { { "strlen", &strlen_wrapper },
+						{ "strcpy", &strcpy_wrapper} };
 
 void call_func(const char* func_name) {
 	for (int i = 0; i < (sizeof(funcs)/sizeof(funcs[0])); i++) {
