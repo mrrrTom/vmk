@@ -13,7 +13,7 @@ char* strcpy(char* dest, const char* src);
 
 // appends the src string to the end of the dest string
 // returns pointer to the dest string
-char *strcat(char* dest, const char* src);
+char* strcat(char* dest, const char* src);
 
 // compares to strings
 // returns 0 - equal, left > right => 1, left < right => -1
