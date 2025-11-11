@@ -12,7 +12,7 @@ int main() {
 	printf("Please insert x, an, ..., a0\n");
 	while (!feof(stdin)) {
 		double input;
-		if (!scanf("%lf", &input) != 1) {
+		if (scanf("%lf", &input) != 1) {
 			if (feof(stdin)) break;
 			// printf("Wrong input!");
 			// return -1;
