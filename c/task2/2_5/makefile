@@ -4,4 +4,7 @@ main: main.c task
 	@cat task
 	@echo --------------------------output---------------------------------
 	./a.out
-	@echo "\n"
+	@echo ""
+debug: main.c
+	gcc main.c -g -I ./
+	gdb ./a.out

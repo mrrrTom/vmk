@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#define _STR_END '\0'
 typedef struct w_struct* w_ptr;
 
 typedef struct w_struct {
@@ -58,14 +58,15 @@ int add(w_list* target, char* str) {
 	char* cursor = str;
 	while(*cursor != '\0') {
 		size++;
+		cursor++;
 	}
 	
 	if (size == 0) return 0;
 	add_empty(target);
-	char* target_str = calloc(size, sizeof(char));
+	char* target_str = calloc((size + 1), sizeof(char));
 	if (!target_str) alloc_error();
 	for (int i = 0; i <= size; i++) {
-		*target_str = *str;
+		*(target_str + i) = *(str + i);
 	}
 
 	target->last->size = size;
@@ -76,22 +77,29 @@ int add(w_list* target, char* str) {
 bool str_equal(char* left, char* right) {
 	bool result = true;
 	do {
-		if (*left != *right) result = false;
+		if (*left != *right) return false;
+		left++;
+		right++;
 	}
-	while (left && right && *left != '0');
-
+	while (left && right && *left != _STR_END);
 	return result;
 }
 
 word* find(w_list* src, char* str, int count) {
 	word* result = NULL;
 	word* current = src->first;
+	if (!src || !current) return result;
 	do {
-		if (current->size != count) continue;
+		if (current->size != count)  {
+			current = current->child;
+			continue;
+		}
+
 		if (str_equal(current->str, str)) return current;
 		current = current->child;
 	}
-	while (current != src->last); 
+	while (current);
+	return result;
 };
 
 void delete_w(w_list* src, w_ptr ptr) {
@@ -143,6 +151,7 @@ void print_l(w_list* ptr) {
 	while (cursor) {
 		printf("%s", cursor->str);
 		if (cursor != ptr->last) printf(" ");
+		cursor = cursor->child;
 	}
 };
 
