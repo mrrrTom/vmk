@@ -48,6 +48,5 @@ int main() {
 	printf("Hello and welcome to the Horner calc!\n");
 	printf("Please insert x, an, ..., a0\n");
 	calc();
-
 	printf("%.10g\n%.10g", cur_val, der);
 }
