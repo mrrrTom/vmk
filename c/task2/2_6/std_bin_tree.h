@@ -125,10 +125,10 @@ void remove_num(b_tree* tree, int num) {
 };
 
 void print_row(t_node** nodes, int count, int offset) {
-	for (int j = 0; j < offset; j++) {
+/*	for (int j = 0; j < offset; j++) {
 		printf("      ");
 	}
-
+*/
 	for (int i = 0; i < count; i++) {
 		if (!nodes[i]) {
 			printf("|  null  |");
