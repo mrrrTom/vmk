@@ -24,9 +24,11 @@ int get_num(char* input) {
 };
 
 int main() {
-	printf("Hello in the tree creator!");
+	printf("Hello in the tree creator!\n");
+	printf("Please start inserting node values:\n");
 	b_tree* tree = malloc(sizeof(b_tree));
-	while (true) {
+	bool can_run = true;
+	while (can_run) {
 		char input[100];
 		scanf("%s", input);
 		int num = get_num(input);
@@ -45,6 +47,7 @@ int main() {
 				print_tree(tree, num);
 				break;
 			default:
+				can_run = false;
 				break;
 		}
 	}

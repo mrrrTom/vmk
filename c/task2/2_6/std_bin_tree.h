@@ -124,10 +124,14 @@ void remove_num(b_tree* tree, int num) {
 	add_subtree(tree, right);
 };
 
-void print_row(t_node** nodes, int count) {
+void print_row(t_node** nodes, int count, int offset) {
+	for (int j = 0; j < offset; j++) {
+		printf("      ");
+	}
+
 	for (int i = 0; i < count; i++) {
 		if (!nodes[i]) {
-			printf(" |  null  |");
+			printf("|  null  |");
 			continue;
 		}
 
@@ -139,7 +143,12 @@ void print_row(t_node** nodes, int count) {
 
 void collect_next_row(t_node** nodes, int count, t_node** result) {
 	for (int i = 0; i < count; i++) {
-		if (!nodes[i]) continue;
+		if (!nodes[i]) {
+			result[2 * i] = NULL;
+			result[2 * i + 1] = NULL;
+			continue;
+		}
+
 		result[2 * i] = nodes[i] -> left;
 		result[2 * i + 1] = nodes[i] -> right;
 	}
@@ -154,30 +163,55 @@ int two_exp(int exp) {
 	return result;
 };
 
-t_node** init_row() {
+t_node** init_row(int size) {
 	t_node** result = calloc(1, sizeof(t_node*));
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < size; i++) {
 		result[i] = calloc(1, sizeof(t_node));
+		result[i] -> left = NULL;
+		result[i] -> right = NULL;
+	}
+
+	return result;
+};
+
+void free_row(t_node** row, int count) {
+	if (!row) return;
+	for (int i = 0; i < count; i++) {
+		if(row[i])
+		free(row[i]);
+	}
+
+	if (row)
+	free(row);
+};
+
+void cp_row(t_node** src, t_node** tgt, int count) {
+	for (int j = 0; j < count; j++) {
+		if (src[j]) {
+			tgt[j] = src[j];
+		}
+		else {
+			tgt[j] = NULL;
+		}
 	}
 };
 
 void print_tree(b_tree* tree, int depth) {
 	if (!tree) return;
 	if (!tree -> root) return;
-	t_node** cur_row = init_row();
+	t_node** cur_row = init_row(two_exp(depth));
+	t_node** next_row = init_row(two_exp(depth));
 	cur_row[0] = tree -> root;
-
+	int n_row_size = 2;
 	for (int i = 0; i < depth; i++) {
-		print_row(cur_row, two_exp(i));
-		t_node** next_row = init_row();
-		collect_next_row(cur_row, two_exp(i + 1), next_row);
-		for (int j = 0; j < 100; j++) {
-			cur_row[j] = next_row[j];
-		}
-
-		free(next_row);
+		int row_size = two_exp(i);
+		print_row(cur_row, row_size, (two_exp(depth - 1 - i)/2));
+		n_row_size = two_exp(i + 1);
+		collect_next_row(cur_row, row_size, next_row);
+		cp_row(next_row, cur_row, n_row_size);
 	}
 
+	free(next_row);
 	free(cur_row);
 };
 
