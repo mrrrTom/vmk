@@ -1,0 +1,68 @@
+operation: {
+  shape: class
+  +key: "char"
+  +is_left_assoc: "bool"
+  +priority: "int"
+  +execute: "void *(ex_context* ctx)"
+}
+
+node: {
+  shape: class
+  +prev: "node*"
+  +next: "node*"
+  +op: "operation*"
+}
+
+node -- operation
+
+ex_context: {
+  shape: class
+  +beg: "node*"
+  +end: "node*"
+}
+
+tr_context: {
+  shape: class
+  +cur_num: "int"
+  +cur_key: "char"
+  +excess: "char"
+}
+
+get_first: |md
+  # node* get_first(ex_context* ctx)
+  resolves, what operation
+  must be calculated first
+| {
+  shape: rectangle
+}
+
+ex_context -> get_first
+get_first -> node
+
+calculate: |md
+  # void calc(ex_context* ctx)
+  calculates context
+  when finished, in context
+  will be 1 node with result
+| {
+  shape: rectangle
+}
+
+ex_context <-> calculate
+
+get_context: |md
+  # ex_context get_ctx()
+  reads chars from stdin
+  creates operations and
+  puts them to the context 
+| {
+  shape: rectangle
+}
+
+stdin: {
+  shape: rectangle
+}
+
+stdin -> get_context
+
+get_context -> ex_context
