@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdexcept>
+#include <climits>
 
 namespace vmk {
 	class Body {
@@ -12,7 +14,12 @@ namespace vmk {
 		int _width;
 		int _height;
 	public:
+		Box() {}
 		Box(int length, int width, int height) {
+			if (length <= 0 || width <= 0 || height <= 0) {
+				throw std::runtime_error("box cannot have zero or less side!");
+			}
+
 			_length = length;
 			_width = width;
 			_height = height;
@@ -40,6 +47,12 @@ namespace vmk {
 		}
 
 		Box operator++() {
+			if (_length == INT_MAX ||
+					_width == INT_MAX ||
+					_height == INT_MAX) {
+				throw std::runtime_error("wrong value to increase!");
+			}
+
 			this -> _length++;
 			this -> _width++;
 			this -> _height++;
@@ -48,6 +61,12 @@ namespace vmk {
 		}
 
 		Box operator++(int) {
+			if (_length == INT_MAX ||
+					_width == INT_MAX ||
+					_height == INT_MAX) {
+				throw std::runtime_error("wrong value to increase!");
+			}
+
 			Box result(*this);
 			this -> _length++;
 			this -> _width++;
@@ -86,31 +105,94 @@ namespace vmk {
 		return result;
 	}
 
-	class WBox : public Box {
+	class WBox : virtual public Box {
 	private:
 		int _w_length;
 		int _w_width;
 	public:
 		WBox(int length, int width, int height, int w_length, int w_width) 
 		: Box (length, width, height) {
+			if (w_length <= 0 || w_width <= 0) {
+				throw std::runtime_error("size cannot be zero or less!");
+			}
+
+			int w_area = w_length * w_width;
+			if ((w_length > length && w_length > width) ||
+					(w_width > length && w_width > width) ||
+					(w_area > (length * height) && w_area > (width * height))) {
+				throw std::runtime_error("very big window!");
+			}
+			
 			_w_length = w_length;
 			_w_width = w_width;
 		}
 
 		WBox(int length, int width, int height, int w_length)
-			: Box(length, width, height) {
-				_w_length = w_length;
-				_w_width = w_length;
+			: WBox(length, width, height, w_length, w_length) {
 		}
 
-		int area() override {
+		virtual int area() override {
 			int w_area = _w_length * _w_width;
 			int result = Box::area() - w_area;
 			return result;
 		}
 	};
 
-	class HBox : public Box {
-		
+	class HBox : virtual public Box {
+	private:
+		Box* _top;
+	public:
+		HBox(int length, int width, int height, int h_height)
+			: Box (length, width, height) {
+				if (h_height <= 0) {
+					throw std::runtime_error("size cannot be zero or less!");
+				}
+
+				_top = new Box(length, width, h_height);
+			}
+
+		HBox(int length, int height, int h_height)
+			: HBox(length, length, height, h_height) {
+		}
+
+		HBox(int length, int h_height) 
+			: HBox(length, length, length, h_height) { }
+
+		~HBox() {
+			delete(_top);
+		}
+
+		virtual int area() override {
+			int h_area = _top -> area();
+			int result = Box::area() + h_area;
+			return result;
+		}
+	};
+
+	class WHBox : public WBox, public HBox {
+	public:
+		WHBox(int length, int width, int height, 
+				int w_length, int w_width, 
+				int h_height)
+			: Box(length, width, height),
+			WBox(length, width, height, w_length, w_width),
+			HBox(length, width, height, h_height) {
+		}
+
+		WHBox(int length, int width, int height,
+				int w_length,
+				int h_height)
+			: Box(length, width, height),
+			WBox(length, width, height, w_length),
+			HBox(length, width, height, h_height) {
+			}
+
+		int area() override {
+			int box_area = Box::area();
+			int window_area = box_area - WBox::area();
+			int top_area = HBox::area() - box_area;
+			int result = box_area + top_area - window_area;
+			return result;
+		}
 	};
 }
