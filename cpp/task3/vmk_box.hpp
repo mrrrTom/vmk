@@ -5,7 +5,7 @@
 namespace vmk {
 	class Body {
 	public:
-		virtual int area() = 0;
+		virtual int area() const = 0;
 	};
 
 	class Box : public Body {
@@ -76,11 +76,11 @@ namespace vmk {
 		
 		friend Box operator+(const Box& b1, const Box& b2);
 
-		int get_length() { return this -> _length; }
+		int get_length() const { return this -> _length; }
 
-		int get_width() { return this -> _width; }
+		int get_width() const { return this -> _width; }
 
-		int get_height() { return this -> _height; }
+		int get_height() const { return this -> _height; }
 
 		void set_length(int length) { this -> _length = length;	}
 
@@ -88,10 +88,10 @@ namespace vmk {
 
 		void set_height(int height) { this -> _height = height;	}
 
-		virtual int area() override {
-			int bottom = _length * _width;
-			int side_1 = _length * _height;
-			int side_2 = _width * _height;
+		virtual int area() const override {
+			int bottom = this -> get_length() * (this -> get_width());
+			int side_1 = this -> get_length() * (this -> get_height());
+			int side_2 = this -> get_width() * (this -> get_height());
 			int result = 2 * bottom + 2 * side_1 + 2 * side_2;
 			return result;
 		}
@@ -131,8 +131,11 @@ namespace vmk {
 			: WBox(length, width, height, w_length, w_length) {
 		}
 
-		virtual int area() override {
-			int w_area = _w_length * _w_width;
+		int get_w_length() const { return _w_length; }
+		int get_w_width() const { return _w_width; }
+
+		virtual int area() const override {
+			int w_area = this -> get_w_length() * (this -> get_w_width());
 			int result = Box::area() - w_area;
 			return result;
 		}
@@ -162,7 +165,7 @@ namespace vmk {
 			delete(_top);
 		}
 
-		virtual int area() override {
+		virtual int area() const override {
 			int h_area = _top -> area();
 			int result = Box::area() + h_area;
 			return result;
@@ -187,7 +190,7 @@ namespace vmk {
 			HBox(length, width, height, h_height) {
 			}
 
-		int area() override {
+		int area() const override {
 			int box_area = Box::area();
 			int window_area = box_area - WBox::area();
 			int top_area = HBox::area() - box_area;

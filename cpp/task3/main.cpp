@@ -98,6 +98,9 @@ int main() {
 	stack_8_3.push(box_8);
 	stack_8_3.push(box_8_2);
 	std::cout << (stack_8_3.top_element().area()) << std::endl;
-	
+
+	const Box box_10(89);
+	std::cout << (box_10.area());
+
 	return 0;
 }
