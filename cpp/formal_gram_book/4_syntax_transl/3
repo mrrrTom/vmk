@@ -24,3 +24,16 @@ b -> <1>
 
 =>  S -> a<0>Sb<1>|c<1>A
 	A -> c<1>A|epsilon
+
+b) L1 = { 
+
+S -> aS|bS|cA
+A -> cA|epsilon
+
+Проверили, что рекурсивный спуск пременим
+
+Построим дерево вывода: abcc
+...
+
+S -> aS<c> | bS | c<a>A
+A -> c<a> A | epsilon
