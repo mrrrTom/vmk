@@ -1,0 +1,20 @@
+- Даны грамматика и цепочка. Построить вывод заданной цепочки.
+а) S -> T | T + S | T - S
+T -> F | F * T
+F -> a | b
+Цепочка: a - b * a + b
+
+Построение: S -> T - S -> T - T + S -> T - F * T + S ->
+F - F * T + S -> a - b * T + S -> a - b * F + T ->
+a - b * a + F -> a - b * a + b
+
+b) S -> aSBC | abC
+CB -> BC
+bB -> bb
+bC -> bc
+cC -> cc
+Цепочка: aaabbbccc
+
+Построение:
+S -> aSBC -> aaSBCBC -> aaabCBCBC -> aaabBCCBC -> aaabbCCBC -> aaabbCBCC ->
+aaabbBCCC -> aaabbbCCC -> aaabbbcCC -> aaabbbccC -> aaabbbccc
